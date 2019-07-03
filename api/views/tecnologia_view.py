@@ -20,3 +20,9 @@ class TecnologiaList(APIView):
             tecnologia_bd = tecnologia_service.cadastrar_tecnologia(tecnologia_nova)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class TecnologiaDetalhes(APIView):
+    def get(self, request, id, format=None):
+        tecnologia = tecnologia_service.listar_tecnologia_id(id)
+        serializer = tecnologia_serializer.TecnologiaSerializer(tecnologia)
+        return Response(serializer.data, status=status.HTTP_200_OK)
