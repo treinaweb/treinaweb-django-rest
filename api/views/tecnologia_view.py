@@ -26,3 +26,13 @@ class TecnologiaDetalhes(APIView):
         tecnologia = tecnologia_service.listar_tecnologia_id(id)
         serializer = tecnologia_serializer.TecnologiaSerializer(tecnologia)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, id, format=None):
+        tecnologia_antiga = tecnologia_service.listar_tecnologia_id(id)
+        serializer = tecnologia_serializer.TecnologiaSerializer(tecnologia_antiga, data=request.data)
+        if serializer.is_valid():
+            nome = serializer.validated_data["nome"]
+            tecnologia_nova = tecnologia.Tecnologia(nome=nome)
+            tecnologia_service.editar_tecnologia(tecnologia_antiga, tecnologia_nova)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
