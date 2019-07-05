@@ -1,3 +1,5 @@
+from django.http import Http404
+
 from ..models import Vaga
 from .tecnologia_service import listar_tecnologia_id
 
@@ -14,3 +16,9 @@ def cadastrar_vaga(vaga):
         tecnologia = listar_tecnologia_id(i.id)
         vaga_bd.tecnologias.add(tecnologia)
     return vaga_bd
+
+def listar_vaga_id(id):
+    try:
+        return Vaga.objects.get(id=id)
+    except Vaga.DoesNotExist:
+        raise Http404

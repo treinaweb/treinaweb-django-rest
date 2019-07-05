@@ -28,3 +28,9 @@ class VagaList(APIView):
             vaga_service.cadastrar_vaga(vaga_nova)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class VagaDetalhes(APIView):
+    def get(self, request, id, format=None):
+        vaga = vaga_service.listar_vaga_id(id)
+        serializer = vaga_serializer.VagaSerializer(vaga)
+        return Response(serializer.data, status=status.HTTP_200_OK)
