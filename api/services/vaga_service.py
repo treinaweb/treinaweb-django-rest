@@ -34,3 +34,6 @@ def editar_vaga(vaga_antiga, vaga_nova):
     vaga_antiga.tecnologias.set(vaga_nova.tecnologias)
     vaga_antiga.save(force_update=True)
 
+def remover_vaga(vaga):
+    vaga.delete()
+
