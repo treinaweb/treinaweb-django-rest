@@ -5,11 +5,12 @@ from rest_framework.views import APIView
 from ..services import vaga_service
 from ..serializers import vaga_serializer
 from ..entidades import vaga
+from ..pagination import PaginacaoCustomizada
 
 
 class VagaList(APIView):
     def get(self, request, format=None):
-        paginacao = PageNumberPagination()
+        paginacao = PaginacaoCustomizada()
         vagas = vaga_service.listar_vagas()
         resultado = paginacao.paginate_queryset(vagas, request)
         serializer = vaga_serializer.VagaSerializer(resultado, many=True)
